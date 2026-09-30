@@ -1,6 +1,6 @@
 """
-Интерактивное меню с рабочими кнопками, настройками и т.д.
-Panda3D DirectGUI
+Interactive menu with working buttons, settings, etc.
+Panda3D DirectGUI - English version to avoid Cyrillic font issues
 """
 from typing import Dict, Optional, Callable, List
 import sys
@@ -14,7 +14,7 @@ try:
     HAS_DIRECTGUI = True
 except ImportError:
     HAS_DIRECTGUI = False
-    print("[Menu] DirectGUI не доступен, используется заглушка")
+    print("[Menu] DirectGUI not available, using stub")
 
 from utils.logger import get_logger, LogCategory
 
@@ -53,13 +53,13 @@ class MainMenu(BaseMenu):
         self.seed_input = "1337"
         self.selected_location = "cordon"
 
-        self.logger.log_menu("Инициализация главного меню")
+        self.logger.log_menu("Initializing main menu")
 
         if not HAS_DIRECTGUI or game.headless:
-            self.logger.warning(LogCategory.MENU, "DirectGUI не доступен, меню в консольном режиме")
+            self.logger.warning(LogCategory.MENU, "DirectGUI not available, console mode")
             return
 
-        # Фон
+        # Background
         self.bg_frame = DirectFrame(
             frameColor=(0.05, 0.05, 0.1, 0.9),
             frameSize=(-2, 2, -1.5, 1.5),
@@ -67,7 +67,7 @@ class MainMenu(BaseMenu):
         )
         self.elements.append(self.bg_frame)
 
-        # Заголовок
+        # Title
         self.title = DirectLabel(
             text="S.T.A.L.K.E.R.craft",
             scale=0.15,
@@ -80,7 +80,7 @@ class MainMenu(BaseMenu):
         self.elements.append(self.title)
 
         self.subtitle = DirectLabel(
-            text="Процедурная Зона Отчуждения | Python 3.10 + Panda3D",
+            text="Procedural Exclusion Zone | Python 3.10 + Panda3D",
             scale=0.05,
             pos=(0, 0, 0.75),
             text_fg=(0.7, 0.7, 0.7, 1),
@@ -89,7 +89,7 @@ class MainMenu(BaseMenu):
         )
         self.elements.append(self.subtitle)
 
-        # Кнопки
+        # Buttons
         button_params = {
             "scale": 0.07,
             "frameSize": (-4, 4, -0.5, 1),
@@ -100,7 +100,7 @@ class MainMenu(BaseMenu):
         }
 
         self.btn_new_game = DirectButton(
-            text="Новая игра",
+            text="New Game",
             pos=(0, 0, 0.4),
             command=self._on_new_game_click,
             **button_params
@@ -108,7 +108,7 @@ class MainMenu(BaseMenu):
         self.elements.append(self.btn_new_game)
 
         self.btn_load_game = DirectButton(
-            text="Загрузить игру",
+            text="Load Game",
             pos=(0, 0, 0.2),
             command=self._on_load_game_click,
             **button_params
@@ -116,7 +116,7 @@ class MainMenu(BaseMenu):
         self.elements.append(self.btn_load_game)
 
         self.btn_settings = DirectButton(
-            text="Настройки",
+            text="Settings",
             pos=(0, 0, 0.0),
             command=self._on_settings_click,
             **button_params
@@ -124,7 +124,7 @@ class MainMenu(BaseMenu):
         self.elements.append(self.btn_settings)
 
         self.btn_locations = DirectButton(
-            text="Карта Зоны",
+            text="Zone Map",
             pos=(0, 0, -0.2),
             command=self._on_locations_click,
             **button_params
@@ -132,16 +132,16 @@ class MainMenu(BaseMenu):
         self.elements.append(self.btn_locations)
 
         self.btn_exit = DirectButton(
-            text="Выход",
+            text="Exit",
             pos=(0, 0, -0.5),
             command=self._on_exit_click,
             **button_params
         )
         self.elements.append(self.btn_exit)
 
-        # Seed ввод
+        # Seed input
         self.seed_label = DirectLabel(
-            text="Seed мира:",
+            text="World Seed:",
             scale=0.05,
             pos=(-0.8, 0, -0.8),
             text_fg=(0.8, 0.8, 0.8, 1),
@@ -163,9 +163,9 @@ class MainMenu(BaseMenu):
         )
         self.elements.append(self.seed_entry)
 
-        # Локация стартовая
+        # Location selection
         self.loc_label = DirectLabel(
-            text="Стартовая локация:",
+            text="Start Location:",
             scale=0.05,
             pos=(0.2, 0, -0.8),
             text_fg=(0.8, 0.8, 0.8, 1),
@@ -178,7 +178,7 @@ class MainMenu(BaseMenu):
             from world.location_system import LOCATION_DEFINITIONS
             loc_names = [f"{loc_id} - {loc_def.display_name}" for loc_id, loc_def in LOCATION_DEFINITIONS.items()]
             self.location_menu = DirectOptionMenu(
-                text="Кордон",
+                text="Cordon",
                 scale=0.05,
                 items=loc_names,
                 initialitem=0,
@@ -190,11 +190,11 @@ class MainMenu(BaseMenu):
             )
             self.elements.append(self.location_menu)
         except Exception as e:
-            self.logger.error(LogCategory.MENU, f"Не удалось создать меню локаций: {e}")
+            self.logger.error(LogCategory.MENU, f"Failed to create location menu: {e}")
 
-        # Версия
+        # Version
         self.version_label = DirectLabel(
-            text="v0.2.0 | Python 3.10.0 | Panda3D 1.10.14 | Процедурная генерация",
+            text="v0.2.1 | Python 3.10.0 | Panda3D 1.10.14 | Procedural",
             scale=0.035,
             pos=(0, 0, -1.3),
             text_fg=(0.5, 0.5, 0.5, 1),
@@ -204,61 +204,50 @@ class MainMenu(BaseMenu):
         self.elements.append(self.version_label)
 
         self.hide()
-        self.logger.log_menu("Главное меню создано с DirectGUI")
+        self.logger.log_menu("Main menu created with DirectGUI")
 
     def _on_seed_changed(self, text):
         self.seed_input = text
-        self.logger.log_menu(f"Seed изменён на {text}")
+        self.logger.log_menu(f"Seed changed to {text}")
 
     def _on_location_selected(self, selection):
-        # selection вида "cordon - Кордон"
         loc_id = selection.split(" - ")[0]
         self.selected_location = loc_id
-        self.logger.log_menu(f"Выбрана стартовая локация: {loc_id}")
+        self.logger.log_menu(f"Selected start location: {loc_id}")
 
     def _on_new_game_click(self):
-        self.logger.log_menu(f"Нажата Новая игра, seed={self.seed_input}, location={self.selected_location}")
+        self.logger.log_menu(f"New Game clicked, seed={self.seed_input}, location={self.selected_location}")
         seed = int(self.seed_input) if self.seed_input.isdigit() else 1337
         if self.on_new_game:
             self.on_new_game(seed, self.selected_location)
 
     def _on_load_game_click(self):
-        self.logger.log_menu("Нажата Загрузить игру")
+        self.logger.log_menu("Load Game clicked")
         if self.on_load_game:
             self.on_load_game()
 
     def _on_settings_click(self):
-        self.logger.log_menu("Нажата Настройки")
+        self.logger.log_menu("Settings clicked")
         if self.on_settings:
             self.on_settings()
 
     def _on_locations_click(self):
-        self.logger.log_menu("Нажата Карта Зоны")
-        # Показываем карту локаций
+        self.logger.log_menu("Zone Map clicked")
         if hasattr(self.game, 'show_location_map'):
             self.game.show_location_map()
 
     def _on_exit_click(self):
-        self.logger.log_menu("Нажата Выход")
+        self.logger.log_menu("Exit clicked")
         if self.on_exit:
             self.on_exit()
         else:
             sys.exit(0)
 
-    def handle_input(self, key):
-        # Для совместимости со старой системой
-        if key == "up":
-            pass
-        elif key == "down":
-            pass
-        elif key == "enter":
-            self._on_new_game_click()
-
 class SettingsMenu(BaseMenu):
     def __init__(self, game, on_back=None):
         super().__init__(game)
         self.on_back = on_back
-        self.logger.log_menu("Инициализация меню настроек")
+        self.logger.log_menu("Initializing settings menu")
 
         if not HAS_DIRECTGUI or game.headless:
             return
@@ -271,7 +260,7 @@ class SettingsMenu(BaseMenu):
         self.elements.append(self.bg_frame)
 
         self.title = DirectLabel(
-            text="Настройки",
+            text="Settings",
             scale=0.1,
             pos=(0, 0, 0.9),
             text_fg=(0.8, 0.6, 0.2, 1),
@@ -280,10 +269,9 @@ class SettingsMenu(BaseMenu):
         )
         self.elements.append(self.title)
 
-        # Графика
         y = 0.6
         self.gfx_label = DirectLabel(
-            text="Графика:",
+            text="Graphics:",
             scale=0.06,
             pos=(-1.0, 0, y),
             text_fg=(1, 1, 1, 1),
@@ -292,9 +280,8 @@ class SettingsMenu(BaseMenu):
         )
         self.elements.append(self.gfx_label)
 
-        # View distance slider
         self.view_dist_label = DirectLabel(
-            text="Дальность прорисовки чанков:",
+            text="View Distance (chunks):",
             scale=0.04,
             pos=(-1.0, 0, y-0.15),
             text_fg=(0.8, 0.8, 0.8, 1),
@@ -314,9 +301,8 @@ class SettingsMenu(BaseMenu):
         )
         self.elements.append(self.view_dist_slider)
 
-        # Тени checkbox
         self.shadows_check = DirectCheckButton(
-            text="Тени",
+            text="Shadows",
             scale=0.05,
             pos=(-1.0, 0, y-0.3),
             command=self._on_shadows_toggled,
@@ -324,9 +310,8 @@ class SettingsMenu(BaseMenu):
         )
         self.elements.append(self.shadows_check)
 
-        # Туман checkbox
         self.fog_check = DirectCheckButton(
-            text="Туман",
+            text="Fog",
             scale=0.05,
             pos=(-0.3, 0, y-0.3),
             command=self._on_fog_toggled,
@@ -334,10 +319,9 @@ class SettingsMenu(BaseMenu):
         )
         self.elements.append(self.fog_check)
 
-        # Звук
         y -= 0.5
         self.audio_label = DirectLabel(
-            text="Звук:",
+            text="Audio:",
             scale=0.06,
             pos=(-1.0, 0, y),
             text_fg=(1, 1, 1, 1),
@@ -357,10 +341,9 @@ class SettingsMenu(BaseMenu):
         )
         self.elements.append(self.volume_slider)
 
-        # Управление
         y -= 0.5
         self.controls_label = DirectLabel(
-            text="Управление: WASD движение, Shift бег, Ctrl присед, ЛКМ копать, F3 дебаг, F5 сохранить, F8 консоль, Esc пауза",
+            text="Controls: WASD move, Shift run, Ctrl crouch, LMB dig, RMB build, F3 debug, F5 save, F8 console, Esc pause, M mouse lock",
             scale=0.035,
             pos=(0, 0, y),
             text_fg=(0.7, 0.7, 0.7, 1),
@@ -370,9 +353,8 @@ class SettingsMenu(BaseMenu):
         )
         self.elements.append(self.controls_label)
 
-        # Кнопка назад
         self.btn_back = DirectButton(
-            text="Назад",
+            text="Back",
             scale=0.06,
             pos=(0, 0, -0.9),
             frameSize=(-3, 3, -0.5, 1),
@@ -385,23 +367,20 @@ class SettingsMenu(BaseMenu):
 
     def _on_view_dist_changed(self):
         val = int(self.view_dist_slider['value'])
-        self.logger.log_menu(f"Дальность прорисовки изменена на {val}")
-        if hasattr(self.game, 'config'):
-            # Обновляем конфиг
-            pass
+        self.logger.log_menu(f"View distance changed to {val}")
 
     def _on_shadows_toggled(self, value):
-        self.logger.log_menu(f"Тени toggled: {value}")
+        self.logger.log_menu(f"Shadows toggled: {value}")
 
     def _on_fog_toggled(self, value):
-        self.logger.log_menu(f"Туман toggled: {value}")
+        self.logger.log_menu(f"Fog toggled: {value}")
 
     def _on_volume_changed(self):
         val = int(self.volume_slider['value'])
-        self.logger.log_menu(f"Громкость изменена на {val}%")
+        self.logger.log_menu(f"Volume changed to {val}%")
 
     def _on_back_click(self):
-        self.logger.log_menu("Нажата Назад в настройках")
+        self.logger.log_menu("Back from settings")
         self.hide()
         if self.on_back:
             self.on_back()
@@ -415,7 +394,7 @@ class PauseMenu(BaseMenu):
         self.on_settings = on_settings
         self.on_exit_to_menu = on_exit_to_menu
 
-        self.logger.log_menu("Инициализация паузы")
+        self.logger.log_menu("Initializing pause menu")
 
         if not HAS_DIRECTGUI or game.headless:
             return
@@ -428,7 +407,7 @@ class PauseMenu(BaseMenu):
         self.elements.append(self.bg_frame)
 
         self.title = DirectLabel(
-            text="Пауза",
+            text="Pause",
             scale=0.12,
             pos=(0, 0, 0.7),
             text_fg=(0.8, 0.6, 0.2, 1),
@@ -444,60 +423,58 @@ class PauseMenu(BaseMenu):
             "parent": self.bg_frame,
         }
 
-        self.btn_resume = DirectButton(text="Продолжить", pos=(0,0,0.4), command=self._on_resume, **btn_params)
+        self.btn_resume = DirectButton(text="Resume", pos=(0,0,0.4), command=self._on_resume, **btn_params)
         self.elements.append(self.btn_resume)
 
-        self.btn_save = DirectButton(text="Сохранить (F5)", pos=(0,0,0.2), command=self._on_save, **btn_params)
+        self.btn_save = DirectButton(text="Save (F5)", pos=(0,0,0.2), command=self._on_save, **btn_params)
         self.elements.append(self.btn_save)
 
-        self.btn_load = DirectButton(text="Загрузить", pos=(0,0,0.0), command=self._on_load, **btn_params)
+        self.btn_load = DirectButton(text="Load", pos=(0,0,0.0), command=self._on_load, **btn_params)
         self.elements.append(self.btn_load)
 
-        self.btn_settings = DirectButton(text="Настройки", pos=(0,0,-0.2), command=self._on_settings, **btn_params)
+        self.btn_settings = DirectButton(text="Settings", pos=(0,0,-0.2), command=self._on_settings, **btn_params)
         self.elements.append(self.btn_settings)
 
-        self.btn_exit = DirectButton(text="Выход в меню", pos=(0,0,-0.5), command=self._on_exit_to_menu, **btn_params)
+        self.btn_exit = DirectButton(text="Exit to Menu", pos=(0,0,-0.5), command=self._on_exit_to_menu, **btn_params)
         self.elements.append(self.btn_exit)
 
         self.hide()
 
     def _on_resume(self):
-        self.logger.log_menu("Продолжить")
+        self.logger.log_menu("Resume")
         self.hide()
         if self.on_resume:
             self.on_resume()
 
     def _on_save(self):
-        self.logger.log_menu("Сохранить")
+        self.logger.log_menu("Save")
         if self.on_save:
             self.on_save()
 
     def _on_load(self):
-        self.logger.log_menu("Загрузить")
+        self.logger.log_menu("Load")
         if self.on_load:
             self.on_load()
 
     def _on_settings(self):
-        self.logger.log_menu("Настройки из паузы")
+        self.logger.log_menu("Settings from pause")
         if self.on_settings:
             self.on_settings()
 
     def _on_exit_to_menu(self):
-        self.logger.log_menu("Выход в меню")
+        self.logger.log_menu("Exit to Menu")
         self.hide()
         if self.on_exit_to_menu:
             self.on_exit_to_menu()
 
 class LocationMapMenu(BaseMenu):
-    """Карта Зоны с локациями и переходами."""
-
     def __init__(self, game, location_system, on_select_location=None, on_back=None):
         super().__init__(game)
         self.location_system = location_system
         self.on_select_location = on_select_location
         self.on_back = on_back
 
-        self.logger.log_menu("Инициализация карты Зоны")
+        self.logger.log_menu("Initializing Zone Map")
 
         if not HAS_DIRECTGUI or game.headless:
             return
@@ -510,7 +487,7 @@ class LocationMapMenu(BaseMenu):
         self.elements.append(self.bg_frame)
 
         self.title = DirectLabel(
-            text="Карта Зоны Отчуждения",
+            text="Exclusion Zone Map",
             scale=0.08,
             pos=(0, 0, 1.2),
             text_fg=(0.2, 0.8, 0.2, 1),
@@ -519,10 +496,8 @@ class LocationMapMenu(BaseMenu):
         )
         self.elements.append(self.title)
 
-        # Создаём кнопки для каждой локации в виде сетки
         try:
             from world.location_system import LOCATION_DEFINITIONS
-            # Позиции локаций на карте (упрощённо по логике связей)
             loc_positions = {
                 "cordon": (-1.2, 0.8),
                 "garbage": (-0.6, 0.6),
@@ -545,16 +520,15 @@ class LocationMapMenu(BaseMenu):
                 if not loc_def:
                     continue
 
-                # Цвет по радиации
                 rad = loc_def.radiation_level
                 if rad < 0.2:
-                    color = (0.2, 0.8, 0.2, 0.8)  # зелёный безопасно
+                    color = (0.2, 0.8, 0.2, 0.8)
                 elif rad < 0.5:
-                    color = (0.8, 0.8, 0.2, 0.8)  # жёлтый
+                    color = (0.8, 0.8, 0.2, 0.8)
                 elif rad < 0.8:
-                    color = (0.8, 0.4, 0.2, 0.8)  # оранжевый
+                    color = (0.8, 0.4, 0.2, 0.8)
                 else:
-                    color = (0.8, 0.2, 0.2, 0.8)  # красный опасно
+                    color = (0.8, 0.2, 0.2, 0.8)
 
                 btn = DirectButton(
                     text=loc_def.display_name,
@@ -569,10 +543,8 @@ class LocationMapMenu(BaseMenu):
                 )
                 self.elements.append(btn)
 
-            # Линии связей — упрощённо через лейблы
-            # В реальном — LineSegs, но для простоты текст
             self.info_label = DirectLabel(
-                text="Кликните на локацию для телепорта (читерство) или просмотра инфо\nЗелёный - безопасно, Красный - смертельно опасно\nЛинии - переходы между локациями",
+                text="Click location to teleport (cheat) or view info\nGreen - safe, Red - deadly\nLines - transitions",
                 scale=0.035,
                 pos=(0, 0, -1.1),
                 text_fg=(0.7, 0.7, 0.7, 1),
@@ -582,10 +554,10 @@ class LocationMapMenu(BaseMenu):
             self.elements.append(self.info_label)
 
         except Exception as e:
-            self.logger.error(LogCategory.MENU, f"Ошибка создания карты: {e}")
+            self.logger.error(LogCategory.MENU, f"Error creating map: {e}")
 
         self.btn_back = DirectButton(
-            text="Назад",
+            text="Back",
             scale=0.06,
             pos=(0, 0, -1.3),
             command=self._on_back,
@@ -596,7 +568,7 @@ class LocationMapMenu(BaseMenu):
         self.hide()
 
     def _on_location_click(self, loc_id):
-        self.logger.log_menu(f"Клик по локации {loc_id}")
+        self.logger.log_menu(f"Location clicked {loc_id}")
         if self.on_select_location:
             self.on_select_location(loc_id)
 
@@ -608,7 +580,7 @@ class LocationMapMenu(BaseMenu):
 class LoadingScreen(BaseMenu):
     def __init__(self, game):
         super().__init__(game)
-        self.logger.log_menu("Инициализация экрана загрузки")
+        self.logger.log_menu("Initializing loading screen")
 
         if not HAS_DIRECTGUI or game.headless:
             return
@@ -621,7 +593,7 @@ class LoadingScreen(BaseMenu):
         self.elements.append(self.bg_frame)
 
         self.label = DirectLabel(
-            text="Загрузка...",
+            text="Loading...",
             scale=0.1,
             pos=(0, 0, 0.2),
             text_fg=(1, 1, 1, 1),
@@ -657,32 +629,3 @@ class LoadingScreen(BaseMenu):
             return
         self.progress_label['text'] = f"{percent:.0f}%"
         self.details_label['text'] = details
-
-# Совместимость со старым кодом
-class MainMenuOld:
-    def __init__(self, game):
-        self.game = game
-        self.options = ["Новая игра", "Загрузить", "Настройки", "Выход"]
-        self.selected = 0
-        self.seed_input = "1337"
-
-    def handle_input(self, key):
-        if key == "up":
-            self.selected = (self.selected - 1) % len(self.options)
-        elif key == "down":
-            self.selected = (self.selected + 1) % len(self.options)
-        elif key == "enter":
-            return self.activate()
-        return None
-
-    def activate(self):
-        choice = self.options[self.selected]
-        if choice == "Новая игра":
-            return {"action": "new_game", "seed": int(self.seed_input) if self.seed_input.isdigit() else 1337}
-        elif choice == "Загрузить":
-            return {"action": "load_game"}
-        elif choice == "Настройки":
-            return {"action": "settings"}
-        elif choice == "Выход":
-            return {"action": "exit"}
-        return None

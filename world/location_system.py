@@ -27,7 +27,7 @@ class LocationTransition:
     target_location_id: str
     position: np.ndarray  # позиция в текущей локации
     radius: float = 5.0
-    name: str = "Переход"
+    name: str = "Transition"
     requires_item: Optional[str] = None  # например ключ
     radiation_required: float = 0.0  # минимальная радиация? или защита
 
@@ -63,7 +63,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "cordon": LocationDefinition(
         location_id="cordon",
         name="cordon",
-        display_name="Кордон",
+        display_name="Cordon",
         description="Южная окраина Зоны. Относительно безопасно, много новичков. База военных на юге.",
         size_chunks=(20, 20),
         radiation_level=0.1,
@@ -77,7 +77,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "garbage": LocationDefinition(
         location_id="garbage",
         name="garbage",
-        display_name="Свалка",
+        display_name="Garbage",
         description="Огромная свалка техники и мусора. Много аномалий, бандиты.",
         size_chunks=(18, 18),
         radiation_level=0.3,
@@ -90,7 +90,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "agroprom": LocationDefinition(
         location_id="agroprom",
         name="agroprom",
-        display_name="НИИ Агропром",
+        display_name="Agroprom",
         description="Заброшенный НИИ, подземелья с кровососами. База Долга.",
         size_chunks=(16, 16),
         radiation_level=0.4,
@@ -104,7 +104,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "dark_valley": LocationDefinition(
         location_id="dark_valley",
         name="dark_valley",
-        display_name="Тёмная долина",
+        display_name="Dark Valley",
         description="База бандитов и фабрика. Высокая концентрация аномалий.",
         size_chunks=(16, 16),
         radiation_level=0.35,
@@ -117,7 +117,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "bar": LocationDefinition(
         location_id="bar",
         name="bar",
-        display_name="Бар '100 Рентген'",
+        display_name="Bar 100 Rads",
         description="Безопасная зона, бар сталкеров. Торговцы, задания.",
         size_chunks=(14, 14),
         radiation_level=0.05,
@@ -132,7 +132,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "wild_territory": LocationDefinition(
         location_id="wild_territory",
         name="wild_territory",
-        display_name="Дикая территория",
+        display_name="Wild Territory",
         description="Завод Росток, много аномалий и мутантов. Опасно.",
         size_chunks=(18, 18),
         radiation_level=0.5,
@@ -145,7 +145,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "yantar": LocationDefinition(
         location_id="yantar",
         name="yantar",
-        display_name="Янтарь",
+        display_name="Yantar",
         description="Завод с пси-излучением. Лаборатория X16. Очень опасно без защиты.",
         size_chunks=(16, 16),
         radiation_level=0.7,
@@ -160,7 +160,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "army_warehouses": LocationDefinition(
         location_id="army_warehouses",
         name="army_warehouses",
-        display_name="Армейские склады",
+        display_name="Army Warehouses",
         description="Бывшая военная база, теперь база Свободы. Много мутантов.",
         size_chunks=(20, 20),
         radiation_level=0.4,
@@ -173,7 +173,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "red_forest": LocationDefinition(
         location_id="red_forest",
         name="red_forest",
-        display_name="Рыжий лес",
+        display_name="Red Forest",
         description="Лес, погибший от радиации. Высокая радиация, много аномалий. Путь к ЧАЭС.",
         size_chunks=(22, 22),
         radiation_level=0.85,
@@ -187,7 +187,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "pripyat": LocationDefinition(
         location_id="pripyat",
         name="pripyat",
-        display_name="Припять",
+        display_name="Pripyat",
         description="Мёртвый город. Многоэтажки, высокая радиация, монолитовцы и мутанты.",
         size_chunks=(24, 24),
         radiation_level=0.9,
@@ -201,7 +201,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "jupiter": LocationDefinition(
         location_id="jupiter",
         name="jupiter",
-        display_name="Завод 'Юпитер'",
+        display_name="Jupiter Factory",
         description="Заброшенный завод, рядом Затон. Много аномалий, артефактов.",
         size_chunks=(20, 20),
         radiation_level=0.6,
@@ -214,7 +214,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "zaton": LocationDefinition(
         location_id="zaton",
         name="zaton",
-        display_name="Затон",
+        display_name="Zaton",
         description="Болотистая местность с кораблями. База Скадовск.",
         size_chunks=(20, 20),
         radiation_level=0.45,
@@ -228,7 +228,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "skadovsk": LocationDefinition(
         location_id="skadovsk",
         name="skadovsk",
-        display_name="Скадовск",
+        display_name="Skadovsk",
         description="Корабль-бар на болотах. Безопасная зона.",
         size_chunks=(10, 10),
         radiation_level=0.05,
@@ -243,7 +243,7 @@ LOCATION_DEFINITIONS: Dict[str, LocationDefinition] = {
     "sarcophagus": LocationDefinition(
         location_id="sarcophagus",
         name="sarcophagus",
-        display_name="Саркофаг ЧАЭС",
+        display_name="Sarcophagus",
         description="Сердце Зоны. 4-й энергоблок, саркофаг. Максимальная радиация, уникальные аномалии и мутанты. Финальная локация.",
         size_chunks=(16, 16),
         radiation_level=1.0,
@@ -321,7 +321,7 @@ class LocationSystem:
                 target_location_id=target_id,
                 position=pos,
                 radius=8.0,
-                name=f"Переход в {LOCATION_DEFINITIONS[target_id].display_name}",
+                name=f"To {LOCATION_DEFINITIONS[target_id].display_name}",
             )
             transitions.append(trans)
 
