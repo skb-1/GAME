@@ -1,0 +1,11 @@
+assets_cache/
+saves/
+__pycache__/
+*.pyc
+*.pyo
+*.npz
+*.pkl
+venv/
+.env
+.DS_Store
+*.log
